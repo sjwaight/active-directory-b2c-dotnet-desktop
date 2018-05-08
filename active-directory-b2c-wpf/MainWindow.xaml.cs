@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -165,8 +166,10 @@ namespace active_directory_b2c_wpf
             }
             else
             {
+                UserInfoText.Text = "";
+                IdTokenInfoText.Text = "";
+                AccessTokenInfoText.Text = "";
                 ResultText.Text = "";
-                TokenInfoText.Text = "";
 
                 CallApiButton.Visibility = Visibility.Collapsed;
                 EditProfileButton.Visibility = Visibility.Collapsed;
@@ -178,12 +181,31 @@ namespace active_directory_b2c_wpf
         
         private void DisplayBasicTokenInfo(AuthenticationResult authResult)
         {
-            TokenInfoText.Text = "";
+            UserInfoText.Text = "";
+            IdTokenInfoText.Text = "";
+            AccessTokenInfoText.Text = "";
+            ResultText.Text = "";
+
             if (authResult != null)
             {
-                TokenInfoText.Text += $"Name: {authResult.User.Name}" + Environment.NewLine;
-                TokenInfoText.Text += $"Token Expires: {authResult.ExpiresOn.ToLocalTime()}" + Environment.NewLine;
-                TokenInfoText.Text += $"Access Token: {authResult.AccessToken}" + Environment.NewLine;
+                var IdToken = new JwtSecurityToken(authResult.IdToken);
+
+                UserInfoText.Text += $"Emails[0] (sign-in name): {IdToken.Claims.FirstOrDefault(c => c.Type == "emails")?.Value}" + Environment.NewLine;
+                UserInfoText.Text += $"ID Token Expires (local time): {IdToken.ValidTo.ToLocalTime()}" + Environment.NewLine;
+
+                IdTokenInfoText.Text += authResult.IdToken;
+
+                if(!string.IsNullOrEmpty(authResult.AccessToken))
+                {
+                    var accessToken = new JwtSecurityToken(authResult.AccessToken);
+                    AccessTokenInfoText.Text += authResult.AccessToken;
+
+                    UserInfoText.Text += $"Access Token Expires (local time): {accessToken.ValidTo.ToLocalTime()}" + Environment.NewLine;
+                }
+                else
+                {
+                    AccessTokenInfoText.Text += "No Access Token present - you must publish Scopes and then provide in the config.";
+                }
             }
         }
 

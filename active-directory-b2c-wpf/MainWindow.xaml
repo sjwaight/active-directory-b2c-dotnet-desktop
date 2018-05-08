@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:active_directory_b2c_wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525" Loaded="Window_Loaded">
+        Title="B2C Test Tool" Height="600" Width="525" Loaded="Window_Loaded">
     <Grid Background="Azure">
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="60" />
             <RowDefinition Height="20" />
             <RowDefinition Height="*" />
             <RowDefinition Height="20" />
@@ -23,7 +27,11 @@
         
         <Label Grid.Row="1" Content="API Call Results" Margin="0,0,0,-5" FontFamily="Segoe Ui" />
         <TextBox Grid.Row="2" x:Name="ResultText" TextWrapping="Wrap" Margin="5" FontFamily="Segoe Ui" ScrollViewer.VerticalScrollBarVisibility="Auto" />
-        <Label Grid.Row="3" Content="Token Info" Margin="0,0,0,-5" FontFamily="Segoe Ui" />
-        <TextBox Grid.Row="4" x:Name="TokenInfoText" TextWrapping="Wrap" Margin="5" FontFamily="Segoe Ui" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Label Grid.Row="3" Content="User and Expiration Details" Margin="0,0,0,-5" FontFamily="Segoe Ui" />
+        <TextBox Grid.Row="4" x:Name="UserInfoText" TextWrapping="Wrap" Margin="5" FontFamily="Segoe Ui" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Label Grid.Row="5" Content="ID Token" Margin="0,0,0,-5" FontFamily="Segoe Ui" />
+        <TextBox Grid.Row="6" x:Name="IdTokenInfoText" TextWrapping="Wrap" Margin="5" FontFamily="Segoe Ui" ScrollViewer.VerticalScrollBarVisibility="Auto" />
+        <Label Grid.Row="7" Content="Access Token (if any)" Margin="0,0,0,-5" FontFamily="Segoe Ui" />
+        <TextBox Grid.Row="8" x:Name="AccessTokenInfoText" TextWrapping="Wrap" Margin="5" FontFamily="Segoe Ui" ScrollViewer.VerticalScrollBarVisibility="Auto" />
     </Grid>
 </Window>
